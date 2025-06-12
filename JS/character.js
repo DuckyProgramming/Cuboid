@@ -232,14 +232,30 @@ class character extends located{
         this.subSetupGraphics()
         this.sprites={spin:0,detail:constants.graphics.detail,spinDetail:0,spinDetailHead:0,temp:0}
         this.direction={external:0,main:direction,head:direction,goal:direction}
-        this.calc={int:[]}
+        this.animSet={loop:0,attack:0,flip:0}
         this.subDisplay=this.graphicsManager.getPackage(this.name).display
         this.displayComponent=this.graphicsManager.getPackage(this.name).displayComponent
     }
-    calculatepart(){
+    runAnim(type,rate){
+        switch(type){
+            case 0:
+                this.animSet.loop+=rate
+            break
+            case 1:
+                this.animSet.attack+=rate
+            break
+        }
+    }
+    mainAnim(){
+        for(let a=0,la=2;a<la;a++){
+            this.components.legs[a].anim.theta=90*(-1+a*2)+lsin((this.animSet.loop+this.animSet.flip)*12)*75
+            this.components.arms[a].anim.theta=90*(-1+a*2)+lsin((this.animSet.loop+this.animSet.flip)*12)*60+(a==1?abs(lsin(this.animSet.attack*12))*60:0)
+        }
+    }
+    calculatePart(){
         this.direction.head=this.direction.main
-        for(let a=0,la=this.routines.calculatepart.length;a<la;a++){
-            switch(this.routines.calculatepart[a]){
+        for(let a=0,la=this.routines.calculatePart.length;a<la;a++){
+            switch(this.routines.calculatePart[a]){
                 case 0:
                     this.sprites.spin=round(((this.direction.main%360)+360)%360)
                     this.sprites.spinDetail=constrain(round((((this.direction.main%360)+360)%360)/this.sprites.detail),0,360/this.sprites.detail-1)
@@ -355,7 +371,7 @@ class character extends located{
     }
     display(){
         if(this.fade.main>0&&this.size>0){
-            this.calculatepart()
+            this.calculatePart()
             this.layer.push()
             this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
             this.layer.rotate(this.direction.external)
@@ -481,5 +497,8 @@ class character extends located{
     }
     update(){
         this.time++
+        this.direction.main=spinControl(this.direction.main)
+        this.direction.goal=spinControl(this.direction.goal)
+        this.direction.main=spinDirection(this.direction.main,this.direction.goal,10)
     }
 }

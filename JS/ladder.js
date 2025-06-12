@@ -31,10 +31,10 @@ class partisan extends located{
         this.velocity={x:0,y:0}
     }
     update(){
-        this.position.x+=this.velocity.x
-        this.position.y+=this.velocity.y
         this.previous.position.x=this.position.x
         this.previous.position.y=this.position.y
+        this.position.x+=this.velocity.x
+        this.position.y+=this.velocity.y
         super.update()
     }
 }

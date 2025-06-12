@@ -9,6 +9,7 @@ class wall extends partisan{
         this.bounder={}
         this.index=this.parent.index.wall
         this.parent.index.wall++
+        this.colliders={main:[[parent.entities.players,0]]}
         this.initialValues()
     }
     initialValues(){
@@ -340,6 +341,21 @@ class wall extends partisan{
     }
     display(level){
         switch(level){
+            case -1:
+                this.layer.noFill()
+                this.layer.stroke(0,255,100,this.fade.main)
+                this.layer.strokeWeight(4)
+                for(let a=0,la=this.boundary.length;a<la;a++){
+                    for(let b=0,lb=this.boundary[a].length;b<lb;b++){
+                        this.layer.line(
+                            this.boundary[a][b][0].x+(this.boundary[a][b][0].x<this.position.x?2:-2),
+                            this.boundary[a][b][0].y+(this.boundary[a][b][0].y<this.position.y?2:-2),
+                            this.boundary[a][b][1].x+(this.boundary[a][b][1].x<this.position.x?2:-2),
+                            this.boundary[a][b][1].y+(this.boundary[a][b][1].y<this.position.y?2:-2)
+                        )
+                    }
+                }
+            break
             case 0:
                 this.layer.push()
                 this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
@@ -351,23 +367,6 @@ class wall extends partisan{
                     break
                 }
                 this.layer.pop()
-            break
-            case 1:
-                if(dev.bound){
-                    this.layer.noFill()
-                    this.layer.stroke(0,255,100,this.fade.main)
-                    this.layer.strokeWeight(4)
-                    for(let a=0,la=this.boundary.length;a<la;a++){
-                        for(let b=0,lb=this.boundary[a].length;b<lb;b++){
-                            this.layer.line(
-                                this.boundary[a][b][0].x+(this.boundary[a][b][0].x<this.position.x?2:-2),
-                                this.boundary[a][b][0].y+(this.boundary[a][b][0].y<this.position.y?2:-2),
-                                this.boundary[a][b][1].x+(this.boundary[a][b][1].x<this.position.x?2:-2),
-                                this.boundary[a][b][1].y+(this.boundary[a][b][1].y<this.position.y?2:-2)
-                            )
-                        }
-                    }
-                }
             break
         }
     }
@@ -387,70 +386,60 @@ class wall extends partisan{
             }
         }
     }
-    update(parent){
-        super.update(1)
+    update(){
+        super.update()
         this.velocity.x=0
         this.velocity.y=0
-        switch(this.type){
-            case 2:
-                if(this.timer.main>this.anim.offset){
-                    this.move(0,((this.timer.main-this.anim.offset)%150<75?-1:1)*2)
-                }
-            break
-            case 3:
-                if(this.select.trigger&&this.select.anim<1){
-                    this.select.anim+=0.1
-                    this.color.base[0]+=0.1*this.select.color[0]
-                    this.color.base[1]+=0.1*this.select.color[1]
-                    this.color.base[2]+=0.1*this.select.color[2]
-                }
-                this.anim.disable=smoothAnim(this.anim.disable,this.select.disable,0,1,5)
-            break
+        for(let a=0,la=this.colliders.main.length;a<la;a++){
+            for(let b=0,lb=this.colliders.main[a][0].length;b<lb;b++){
+                this.collide(this.colliders.main[a][1],this.colliders.main[a][0][b])
+            }
         }
     }
-    collide(type,obj,parent){
-        switch(this.type){
-            case 0: case 1: case 2:
-                switch(type){
-                    case 0:
-                        if(inBoxBox(this.bounder,obj)){
-                            let edge=collideBoxBox(this,obj)
-                            if(edge>=0){
-                                switch(this.type){
+    collide(type,obj){
+        switch(type){
+            case 0:
+                if(inBoxBox(this.bounder,obj)){
+                    let edge=collideBoxBox(this,obj)
+                    if(edge>=0){
+                        switch(this.type){
+                            default:
+                                switch(edge){
+                                    case 0:
+                                        if(obj.velocity.y<0){
+                                            obj.position.y=this.position.y+this.height/2+obj.height/2
+                                            obj.velocity.y=max(0,obj.velocity.y)+this.velocity.y
+                                            obj.collided.wall[0]=max(2,obj.collided.wall[0])
+                                        }
+                                    break
                                     case 1:
-                                        return [1,obj.id]
-                                    default:
-                                        switch(edge){
-                                            case 0:
-                                                obj.position.y=this.position.y+this.height/2+obj.height/2
-                                                obj.velocity.y=max(0,obj.velocity.y)+this.velocity.y
-                                                obj.collided.wall[0]=max(2,obj.collided.wall[0])
-                                            break
-                                            case 1:
-                                                obj.position.y=this.position.y-this.height/2-obj.height/2
-                                                obj.velocity.y=min(0,obj.velocity.y)+this.velocity.y
-                                                obj.collided.wall[1]=max(2,obj.collided.wall[1])
-                                                obj.jump.time=max(obj.jump.time,5)
-                                            break
-                                            case 2:
-                                                obj.position.x=this.position.x+this.width/2+obj.width/2
-                                                obj.velocity.x=max(0,obj.velocity.x)+this.velocity.x
-                                                obj.collided.wall[2]=max(2,obj.collided.wall[2])
-                                            break
-                                            case 3:
-                                                obj.position.x=this.position.x-this.width/2-obj.width/2
-                                                obj.velocity.x=min(0,obj.velocity.x)+this.velocity.x
-                                                obj.collided.wall[3]=max(2,obj.collided.wall[3])
-                                            break
+                                        if(obj.velocity.y>0){
+                                            obj.position.y=this.position.y-this.height/2-obj.height/2
+                                            obj.velocity.y=min(0,obj.velocity.y)+this.velocity.y
+                                            obj.collided.wall[1]=max(2,obj.collided.wall[1])
+                                            obj.jump.time=max(obj.jump.time,5)
+                                        }
+                                    break
+                                    case 2:
+                                        if(obj.velocity.x<0){
+                                            obj.position.x=this.position.x+this.width/2+obj.width/2
+                                            obj.velocity.x=max(0,obj.velocity.x)+this.velocity.x
+                                            obj.collided.wall[2]=max(2,obj.collided.wall[2])
+                                        }
+                                    break
+                                    case 3:
+                                        if(obj.velocity.x>0){
+                                            obj.position.x=this.position.x-this.width/2-obj.width/2
+                                            obj.velocity.x=min(0,obj.velocity.x)+this.velocity.x
+                                            obj.collided.wall[3]=max(2,obj.collided.wall[3])
                                         }
                                     break
                                 }
-                            }
+                            break
                         }
-                    break
+                    }
                 }
             break
         }
-        return [0,0]
     }
 }

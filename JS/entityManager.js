@@ -1,8 +1,10 @@
 class entityManager{
-    constructor(layer,operation){
+    constructor(layer,operation,graphicsManager){
         this.layer=layer
         this.operation=operation
+        this.graphicsManager=graphicsManager
         this.tileset=[40,40]
+        this.constants={gravity:1.25}
         this.entities={walls:[],enemies:[],players:[]}
         this.run={fore:[],update:[]}
         this.index={wall:0,enemy:0}
@@ -48,7 +50,10 @@ class entityManager{
                 }
             }
         }
-        this.run.fore=[[this.entities.players,0],[this.entities.walls,0],[this.entities.walls,1]]
+        this.run.fore=[[this.entities.players,0],[this.entities.walls,0]]
+        if(dev.bound){
+            this.run.fore.push([this.entities.players,-1],[this.entities.walls,-1])
+        }
         this.run.update=[this.entities.players,this.entities.walls]
         for(let a=0,la=8;a<la;a++){
             for(let b=0,lb=this.entities.walls.length;b<lb;b++){

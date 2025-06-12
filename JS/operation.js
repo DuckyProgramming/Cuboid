@@ -14,7 +14,7 @@ class operation{
     }
     initialManagers(){
         this.graphicsManager=new graphicsManager(this)
-        this.entityManager=new entityManager(this.layer,this)
+        this.entityManager=new entityManager(this.layer,this,this.graphicsManager)
         this.transitionManager=new transitionManager(this.layer,this)
     }
     display(){
