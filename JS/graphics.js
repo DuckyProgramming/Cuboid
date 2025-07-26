@@ -87,7 +87,7 @@ p5.prototype.backgroundPattern=function(pattern){
 function setupGraphics(){
     setupBase()
     setupTrig()
-	graphics.main=createGraphics(1200,900)
+	graphics.main=createGraphics(960,600)
 	setupLayer(graphics.main)
 }
 function setupBase(){

@@ -10,19 +10,19 @@ class player extends partisan{
         this.collided={wall:[false,false,false,false]}
         this.offset.position.y=24
     }
-    display(level){
+    display(level,layer=this.layer){
         switch(level){
             case -1:
-                this.layer.noFill()
-                this.layer.stroke(0,255,100,this.fade.main)
-                this.layer.strokeWeight(4)
-                this.layer.rect(this.position.x,this.position.y,this.width-4,this.height-4)
+                layer.noFill()
+                layer.stroke(0,255,100,this.fade.main)
+                layer.strokeWeight(4)
+                layer.rect(this.position.x,this.position.y,this.width-4,this.height-4)
             break
             case 0:
-                this.layer.push()
-                this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
+                layer.push()
+                layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
                 this.character.display()
-                this.layer.pop()
+                layer.pop()
             break
         }
     }

@@ -369,113 +369,113 @@ class character extends located{
     flashColor(color){
         return color
     }
-    display(){
+    display(layer=this.layer){
         if(this.fade.main>0&&this.size>0){
             this.calculatePart()
-            this.layer.push()
-            this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
-            this.layer.rotate(this.direction.external)
-            this.layer.scale(this.size)
+            layer.push()
+            layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
+            layer.rotate(this.direction.external)
+            layer.scale(this.size)
             this.subDisplay()
-            this.layer.pop()
+            layer.pop()
         }
     }
-    displayGeneralComponent(type,args){
+    displayGeneralComponent(type,args,layer=this.layer){
         let part
         switch(type){
             case 0:
                 part=this.components.head.eye[args[0]]
-                this.layer.noFill()
+                layer.noFill()
                 if(part.style==6&&part.anim>0){
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
-                    this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
-                    this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*4,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
-                    this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
-                    this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*4,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2)
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
+                    layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                    layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*4,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
+                    layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                    layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*4,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2)
                 }else if(part.style==5){
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((6-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((6-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
                     if(part.anim==0){
-                        this.layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
-                        this.layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                        layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                        layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
                     }else{
-                        this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
-                        this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
+                        layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
+                        layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
                     }
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((6-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((6-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
                     if(part.anim==0){
-                        this.layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
-                        this.layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                        layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                        layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
                     }else{
-                        this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
-                        this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2+0.2-part.anim*0.2)
+                        layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
+                        layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2+0.2-part.anim*0.2)
                     }
                     if(part.anim==0&&constrain(lcos(part.spin+this.direction.head)*5,0,1)>0){
-                        this.layer.stroke(...this.components.head.eye[args[0]].color.glow,this.fade.main*part.fade/4)
-                        this.layer.strokeWeight(0.6)
-                        this.layer.arc(lsin(part.spin+this.direction.head)*(this.components.head.dimensions[0]*0.5+0.5),part.level,2.7*constrain(lcos(part.spin+this.direction.head)*5,0,1),2.7*constrain(lcos(part.spin+this.direction.head)*5,0,1),-72,-12)
+                        layer.stroke(...this.components.head.eye[args[0]].color.glow,this.fade.main*part.fade/4)
+                        layer.strokeWeight(0.6)
+                        layer.arc(lsin(part.spin+this.direction.head)*(this.components.head.dimensions[0]*0.5+0.5),part.level,2.7*constrain(lcos(part.spin+this.direction.head)*5,0,1),2.7*constrain(lcos(part.spin+this.direction.head)*5,0,1),-72,-12)
                         if(part.style==4){
-                            this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                            this.layer.strokeWeight(0.5)
-                            this.layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level,10*constrain(lcos(part.spin+this.direction.head)*5,0,1),10*constrain(lcos(part.spin+this.direction.head)*5,0,1),-165+args[0]*90,-105+args[0]*90)
+                            layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                            layer.strokeWeight(0.5)
+                            layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level,10*constrain(lcos(part.spin+this.direction.head)*5,0,1),10*constrain(lcos(part.spin+this.direction.head)*5,0,1),-165+args[0]*90,-105+args[0]*90)
                         }
                     }
                 }else if(part.style==3&&part.anim>0){
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
-                    this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
-                    this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
+                    layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
+                    layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2+part.anim*2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
                 }else if(part.style==2&&part.anim>0){
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level-1*part.anim,3*part.anim,4*part.anim,30,150)
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.arc(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5),part.level-1*part.anim,3*part.anim,4*part.anim,30,150)
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level-1*part.anim,3*part.anim,4*part.anim,30,150)
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.arc(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5),part.level-1*part.anim,3*part.anim,4*part.anim,30,150)
                 }else if(part.style==1&&part.anim>0){                    
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level+2*part.anim,3*part.anim,4*part.anim,-150,-30)
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
-                    this.layer.arc(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5),part.level+2*part.anim,3*part.anim,4*part.anim,-150,-30)
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level+2*part.anim,3*part.anim,4*part.anim,-150,-30)
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.arc(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5),part.level+2*part.anim,3*part.anim,4*part.anim,-150,-30)
                 }else{
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                    this.layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                    layer.strokeWeight((4-part.anim*3)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
                     if(part.anim==0){
-                        this.layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
-                        this.layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                        layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
+                        layer.point(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level)
                     }else{
-                        this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
-                        this.layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
+                        layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2)
+                        layer.line(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level,lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2)
                     }
-                    this.layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
-                    this.layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
+                    layer.stroke(...this.components.head.eye[args[0]].color.front,this.fade.main*part.fade)
+                    layer.strokeWeight((3-part.anim*2)*constrain(lcos(part.spin+this.direction.head)*5,0,1))
                     if(part.anim==0){
-                        this.layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
-                        this.layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                        layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
+                        layer.point(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2)
                     }else{
-                        this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
-                        this.layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2+0.2-part.anim*0.2)
+                        layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level-part.anim*2+0.2-part.anim*0.2)
+                        layer.line(lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)-(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+0.2-part.anim*0.2,lsin(part.spin+this.direction.head)*((this.components.head.dimensions[0]*0.5+0.5)-part.anim*0.5)+(args[0]*2-1)*lcos(part.spin+this.direction.head)*part.anim*2,part.level+part.anim*2+0.2-part.anim*0.2)
                     }
                     if(part.anim==0&&constrain(lcos(part.spin+this.direction.head)*5,0,1)>0){
-                        this.layer.stroke(...this.components.head.eye[args[0]].color.glow,this.fade.main*part.fade/4)
-                        this.layer.strokeWeight(0.6)
-                        this.layer.arc(lsin(part.spin+this.direction.head)*(this.components.head.dimensions[0]*0.5+0.5),part.level,1.8*constrain(lcos(part.spin+this.direction.head)*5,0,1),1.8*constrain(lcos(part.spin+this.direction.head)*5,0,1),-72,-12)
+                        layer.stroke(...this.components.head.eye[args[0]].color.glow,this.fade.main*part.fade/4)
+                        layer.strokeWeight(0.6)
+                        layer.arc(lsin(part.spin+this.direction.head)*(this.components.head.dimensions[0]*0.5+0.5),part.level,1.8*constrain(lcos(part.spin+this.direction.head)*5,0,1),1.8*constrain(lcos(part.spin+this.direction.head)*5,0,1),-72,-12)
                         if(part.style==4){
-                            this.layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
-                            this.layer.strokeWeight(0.5)
-                            this.layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level,6.5*constrain(lcos(part.spin+this.direction.head)*5,0,1),6.5*constrain(lcos(part.spin+this.direction.head)*5,0,1),-165+args[0]*90,-105+args[0]*90)
+                            layer.stroke(...this.components.head.eye[args[0]].color.back,this.fade.main*part.fade)
+                            layer.strokeWeight(0.5)
+                            layer.arc(lsin(part.spin+this.direction.head)*this.components.head.dimensions[0]*0.5,part.level,6.5*constrain(lcos(part.spin+this.direction.head)*5,0,1),6.5*constrain(lcos(part.spin+this.direction.head)*5,0,1),-165+args[0]*90,-105+args[0]*90)
                         }
                     }
                 }
@@ -483,15 +483,15 @@ class character extends located{
             case 1:
                 part=this.components.head.mouth
                 if(part.anim.open>0){
-                    this.layer.fill(...part.color.in,this.fade.main*part.fade)
+                    layer.fill(...part.color.in,this.fade.main*part.fade)
                 }else{
-                    this.layer.noFill()
+                    layer.noFill()
                 }
-                this.layer.stroke(...part.color.out,this.fade.main*part.fade)
-                this.layer.strokeWeight(0.5-part.anim.open*0.25)
-                this.layer.arc(lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2),part.level,part.anim.x*lcos(this.direction.main),part.anim.y*(0.5+lcos(this.direction.main)*0.5),part.anim.wide,180-part.anim.wide)
-                this.layer.strokeWeight(0.25*part.anim.open)
-                this.layer.line(lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2)-part.anim.x/2*lcos(this.direction.main),part.level,lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2)+part.anim.x/2*lcos(this.direction.main),part.level)
+                layer.stroke(...part.color.out,this.fade.main*part.fade)
+                layer.strokeWeight(0.5-part.anim.open*0.25)
+                layer.arc(lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2),part.level,part.anim.x*lcos(this.direction.main),part.anim.y*(0.5+lcos(this.direction.main)*0.5),part.anim.wide,180-part.anim.wide)
+                layer.strokeWeight(0.25*part.anim.open)
+                layer.line(lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2)-part.anim.x/2*lcos(this.direction.main),part.level,lsin(this.direction.main)*(this.components.head.dimensions[0]*0.5-2)+part.anim.x/2*lcos(this.direction.main),part.level)
             break
         }
     }

@@ -339,15 +339,15 @@ class wall extends partisan{
             break
         }
     }
-    display(level){
+    display(level,layer=this.layer){
         switch(level){
             case -1:
-                this.layer.noFill()
-                this.layer.stroke(0,255,100,this.fade.main)
-                this.layer.strokeWeight(4)
+                layer.noFill()
+                layer.stroke(0,255,100,this.fade.main)
+                layer.strokeWeight(4)
                 for(let a=0,la=this.boundary.length;a<la;a++){
                     for(let b=0,lb=this.boundary[a].length;b<lb;b++){
-                        this.layer.line(
+                        layer.line(
                             this.boundary[a][b][0].x+(this.boundary[a][b][0].x<this.position.x?2:-2),
                             this.boundary[a][b][0].y+(this.boundary[a][b][0].y<this.position.y?2:-2),
                             this.boundary[a][b][1].x+(this.boundary[a][b][1].x<this.position.x?2:-2),
@@ -357,16 +357,16 @@ class wall extends partisan{
                 }
             break
             case 0:
-                this.layer.push()
-                this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
-                this.layer.noStroke()
+                layer.push()
+                layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
+                layer.noStroke()
                 switch(this.type){
                     case 0:
-                        this.layer.fill(100,this.fade.main)
-                        this.layer.rect(0,0,this.width,this.height)
+                        layer.fill(100,this.fade.main)
+                        layer.rect(0,0,this.width,this.height)
                     break
                 }
-                this.layer.pop()
+                layer.pop()
             break
         }
     }
